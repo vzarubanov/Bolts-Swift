@@ -45,7 +45,7 @@ In addition to being able to have different states `completed`/`faulted`/`cancel
 - **Pre-built binaries**
 
  Head on over to the [releases][releases] page, and download the latest build.
- And you're off! Take a look at the resut of the documentation on this readme and start building.
+ And you're off! Take a look at the result of the documentation on this readme and start building.
 
 - **Using Bolts as a sub-project**
 
@@ -53,7 +53,7 @@ In addition to being able to have different states `completed`/`faulted`/`cancel
 
 ## Chaining Tasks
 
-Every `Task` has a function named `continueWith()`, which takes a continuation closure. A continuation will be executed when the task is complete. You can the inspect the task to check if it was successfull and to get its result.
+Every `Task` has a function named `continueWith()`, which takes a continuation closure. A continuation will be executed when the task is complete. You can the inspect the task to check if it was successful and to get its result.
 ```swift
 save(object).continueWith { task in 
   if task.cancelled {
@@ -61,7 +61,7 @@ save(object).continueWith { task in
   } else if task.faulted {
     // Save failed
   } else {
-    // Object was succesfully saved
+    // Object was successfully saved
     let result = task.result
   }
 }
@@ -126,7 +126,7 @@ find(query).continueWithTask { task in
 
 ## Task Executors
 
-Both `continueWith()` and `continueWithTask()` functions accept an optional executor paramtere. These allow you to control how the continuation is executed.
+Both `continueWith()` and `continueWithTask()` functions accept an optional executor parameter. These allow you to control how the continuation is executed.
 The default executor will dispatch to global dispatch queue, but you can provide your own executor to schedule work in a specific way.
 For example, if you want to continue with work on the main thread:
 ```swift
