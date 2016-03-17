@@ -13,7 +13,7 @@ import BoltsSwift
 class ExecutorTests: XCTestCase {
 
     func testDefaultExecute() {
-        let expectation = expectationWithDescription(name)
+        let expectation = expectationWithDescription(currentTestName)
 
         var finished = false
         Executor.Default.execute {
@@ -26,7 +26,7 @@ class ExecutorTests: XCTestCase {
     }
 
     func testImmediateExecute() {
-        let expectation = expectationWithDescription(name)
+        let expectation = expectationWithDescription(currentTestName)
 
         var finished = false
         Executor.Immediate.execute {
@@ -39,7 +39,7 @@ class ExecutorTests: XCTestCase {
     }
 
     func testMainExecute() {
-        let expectation = expectationWithDescription(name)
+        let expectation = expectationWithDescription(currentTestName)
 
         var finished = false
         Executor.MainThread.execute {
@@ -52,7 +52,7 @@ class ExecutorTests: XCTestCase {
     }
 
     func testQueueExecute() {
-        let expectation = expectationWithDescription(name)
+        let expectation = expectationWithDescription(currentTestName)
         var finished = false
 
         Executor.Queue(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)).execute {
@@ -65,7 +65,7 @@ class ExecutorTests: XCTestCase {
     }
 
     func testClosureExecute() {
-        let expectation = expectationWithDescription(name)
+        let expectation = expectationWithDescription(currentTestName)
 
         Executor.Closure { closure in
             closure()
@@ -77,7 +77,7 @@ class ExecutorTests: XCTestCase {
     }
 
     func testOperationQueueExecute() {
-        let expectation = expectationWithDescription(name)
+        let expectation = expectationWithDescription(currentTestName)
         let operationQueue = NSOperationQueue()
         var finished = false
 

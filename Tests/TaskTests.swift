@@ -15,10 +15,10 @@ class TaskTests: XCTestCase {
     // MARK: Initializers
 
     func testWithResult() {
-        let task = Task(name)
+        let task = Task(currentTestName)
 
         XCTAssertNotNil(task.result)
-        XCTAssertEqual(task.result, name)
+        XCTAssertEqual(task.result, currentTestName)
         XCTAssertTrue(task.completed)
         XCTAssertFalse(task.faulted)
         XCTAssertFalse(task.cancelled)
@@ -50,7 +50,7 @@ class TaskTests: XCTestCase {
     // MARK: Task with Delay
 
     func testWithDelay() {
-        let expectation = expectationWithDescription(name)
+        let expectation = expectationWithDescription(currentTestName)
         let task = Task<String>.withDelay(0.01)
         task.continueWith { task in
             expectation.fulfill()
@@ -63,7 +63,7 @@ class TaskTests: XCTestCase {
     // MARK: Execute
 
     func testExecuteWithClosureReturningNil() {
-        let expectation = expectationWithDescription(name)
+        let expectation = expectationWithDescription(currentTestName)
         let task = Task<String> {
             expectation.fulfill()
             return "Hello, World!"
@@ -73,10 +73,10 @@ class TaskTests: XCTestCase {
     }
 
     func testExecuteWithClosureReturningValue() {
-        let expectation = expectationWithDescription(name)
+        let expectation = expectationWithDescription(currentTestName)
         let task = Task<String> {
             expectation.fulfill()
-            return self.name
+            return self.currentTestName
         }
         waitForExpectationsWithTimeout(0.5, handler: nil)
         XCTAssertNotNil(task.result)
@@ -84,7 +84,7 @@ class TaskTests: XCTestCase {
     }
 
     func testExecuteWithClosureReturningTaskWithResult() {
-        let expectation = expectationWithDescription(name)
+        let expectation = expectationWithDescription(currentTestName)
         let task = Task.executeWithTask { () -> Task<Int> in
             expectation.fulfill()
             return Task(10)
@@ -95,7 +95,7 @@ class TaskTests: XCTestCase {
     }
 
     func testExecuteWithClosureReturningCancelledTask() {
-        let expectation = expectationWithDescription(name)
+        let expectation = expectationWithDescription(currentTestName)
         let task = Task<Void>.executeWithTask { () -> Task<Void> in
             expectation.fulfill()
             return Task<Void>.cancelledTask()
@@ -196,7 +196,7 @@ class TaskTests: XCTestCase {
     func testContinueWithByReturningTask() {
         let expectation = expectationWithDescription("continuationTaskSucceeds")
         let firstTask = Task(1)
-        let secondTask = Task(name)
+        let secondTask = Task(currentTestName)
 
         let continuationTask = firstTask.continueWithTask { task -> Task<String> in
             XCTAssertTrue(task === firstTask)
@@ -226,7 +226,7 @@ class TaskTests: XCTestCase {
     }
 
     func testChainedContinueWithFunctions() {
-        let expectation = expectationWithDescription(name)
+        let expectation = expectationWithDescription(currentTestName)
         var count = 0
 
         Task<Void>.cancelledTask().continueWith { _ -> String? in
@@ -256,7 +256,7 @@ class TaskTests: XCTestCase {
     }
 
     func testChainedContinueWithWithAsyncExecutor() {
-        let expectation = expectationWithDescription(name)
+        let expectation = expectationWithDescription(currentTestName)
         let executor = Executor.Queue(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0))
         var count = 0
 
@@ -296,7 +296,7 @@ class TaskTests: XCTestCase {
             tasks.append(task)
         }
 
-        let expectation = expectationWithDescription(name)
+        let expectation = expectationWithDescription(currentTestName)
         let task = Task.whenAll(tasks).continueWith { task in
             XCTAssertEqual(count, Int32(tasks.count))
             XCTAssertTrue(task.completed)
@@ -326,7 +326,7 @@ class TaskTests: XCTestCase {
             tasks.append(task)
         }
 
-        let expectation = expectationWithDescription(name)
+        let expectation = expectationWithDescription(currentTestName)
         let task = Task.whenAllResult(tasks).continueWith { task in
             XCTAssertEqual(count, Int32(tasks.count))
             XCTAssertTrue(task.completed)
@@ -360,7 +360,7 @@ class TaskTests: XCTestCase {
             tasks.append(task)
         }
 
-        let expectation = expectationWithDescription(name)
+        let expectation = expectationWithDescription(currentTestName)
         let task = Task.whenAllResult(tasks).continueWith { task in
             XCTAssertEqual(count, Int32(tasks.count))
             XCTAssertTrue(task.completed)
@@ -393,7 +393,7 @@ class TaskTests: XCTestCase {
             tasks.append(task)
         }
 
-        let expectation = expectationWithDescription(name)
+        let expectation = expectationWithDescription(currentTestName)
         let task = Task.whenAny(tasks).continueWith { task in
             XCTAssertNotEqual(count, Int32(tasks.count))
             XCTAssertTrue(task.completed)
@@ -425,7 +425,7 @@ class TaskTests: XCTestCase {
             tasks.append(task)
         }
 
-        let expectation = expectationWithDescription(name)
+        let expectation = expectationWithDescription(currentTestName)
         let task = Task.whenAny(tasks).continueWith { task in
             XCTAssertNotEqual(count, Int32(tasks.count))
             XCTAssertTrue(task.completed)
@@ -456,7 +456,7 @@ class TaskTests: XCTestCase {
             tasks.append(task)
         }
 
-        let expectation = expectationWithDescription(name)
+        let expectation = expectationWithDescription(currentTestName)
         let task = Task.whenAny(tasks).continueWith { task in
             XCTAssertNotEqual(count, Int32(tasks.count))
             XCTAssertTrue(task.completed)
