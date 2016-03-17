@@ -30,7 +30,7 @@ In addition to being able to have different states `completed`/`faulted`/`cancel
 
  Add the following line to your Podfile:
  ```ruby
- pod 'BoltsSwift'
+ pod 'Bolts-Swift'
  ```
  Run `pod install`, and you should now have the latest parse release.
   
