@@ -19,6 +19,9 @@
 		065895131C9A947B000FDDA6 /* TaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D300781C93AF9F00E1A1ED /* TaskTests.swift */; };
 		065895141C9A947B000FDDA6 /* TaskCompletionSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D300771C93AF9F00E1A1ED /* TaskCompletionSourceTests.swift */; };
 		0658951F1C9A9496000FDDA6 /* BoltsSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 065894FF1C9A93B7000FDDA6 /* BoltsSwift.framework */; };
+		810AB3201C9B1AC3005B6184 /* XCTestCase+TestName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810AB31F1C9B1AC3005B6184 /* XCTestCase+TestName.swift */; };
+		810AB3211C9B1AC3005B6184 /* XCTestCase+TestName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810AB31F1C9B1AC3005B6184 /* XCTestCase+TestName.swift */; };
+		810AB3221C9B1AC3005B6184 /* XCTestCase+TestName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810AB31F1C9B1AC3005B6184 /* XCTestCase+TestName.swift */; };
 		81CC14F71A9BE0A100B28F86 /* BoltsSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81CC14EC1A9BE0A100B28F86 /* BoltsSwift.framework */; };
 		81D300681C93AF7300E1A1ED /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D300631C93AF7300E1A1ED /* Errors.swift */; };
 		81D300691C93AF7300E1A1ED /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D300631C93AF7300E1A1ED /* Errors.swift */; };
@@ -65,6 +68,7 @@
 		065894E71C9A933B000FDDA6 /* BoltsSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BoltsSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		065894FF1C9A93B7000FDDA6 /* BoltsSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BoltsSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0658951B1C9A947B000FDDA6 /* BoltsSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BoltsSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		810AB31F1C9B1AC3005B6184 /* XCTestCase+TestName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCTestCase+TestName.swift"; sourceTree = "<group>"; };
 		81CC14EC1A9BE0A100B28F86 /* BoltsSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BoltsSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81CC14F61A9BE0A100B28F86 /* BoltsSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BoltsSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		81D300631C93AF7300E1A1ED /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
@@ -170,6 +174,7 @@
 				81D300781C93AF9F00E1A1ED /* TaskTests.swift */,
 				81D300771C93AF9F00E1A1ED /* TaskCompletionSourceTests.swift */,
 				81D300751C93AF9F00E1A1ED /* ExecutorTests.swift */,
+				810AB31F1C9B1AC3005B6184 /* XCTestCase+TestName.swift */,
 				81D300811C93AFA600E1A1ED /* Supporting Files */,
 			);
 			path = Tests;
@@ -501,6 +506,7 @@
 				065895121C9A947B000FDDA6 /* ExecutorTests.swift in Sources */,
 				065895131C9A947B000FDDA6 /* TaskTests.swift in Sources */,
 				065895141C9A947B000FDDA6 /* TaskCompletionSourceTests.swift in Sources */,
+				810AB3221C9B1AC3005B6184 /* XCTestCase+TestName.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -522,6 +528,7 @@
 				81D3007A1C93AF9F00E1A1ED /* ExecutorTests.swift in Sources */,
 				81D300801C93AF9F00E1A1ED /* TaskTests.swift in Sources */,
 				81D3007E1C93AF9F00E1A1ED /* TaskCompletionSourceTests.swift in Sources */,
+				810AB3211C9B1AC3005B6184 /* XCTestCase+TestName.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -543,6 +550,7 @@
 				81D300791C93AF9F00E1A1ED /* ExecutorTests.swift in Sources */,
 				81D3007F1C93AF9F00E1A1ED /* TaskTests.swift in Sources */,
 				81D3007D1C93AF9F00E1A1ED /* TaskCompletionSourceTests.swift in Sources */,
+				810AB3201C9B1AC3005B6184 /* XCTestCase+TestName.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -939,6 +947,7 @@
 				065894ED1C9A933B000FDDA6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		065894FC1C9A93B7000FDDA6 /* Build configuration list for PBXNativeTarget "BoltsSwift-tvOS" */ = {
 			isa = XCConfigurationList;

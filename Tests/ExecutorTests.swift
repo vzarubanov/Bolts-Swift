@@ -13,7 +13,7 @@ import BoltsSwift
 class ExecutorTests: XCTestCase {
 
     func testDefaultExecute() {
-        let expectation = expectationWithDescription(name)
+        let expectation = expectationWithDescription(currentTestName)
 
         var finished = false
         Executor.Default.execute {
@@ -26,7 +26,7 @@ class ExecutorTests: XCTestCase {
     }
 
     func testImmediateExecute() {
-        let expectation = expectationWithDescription(name)
+        let expectation = expectationWithDescription(currentTestName)
 
         var finished = false
         Executor.Immediate.execute {
@@ -39,7 +39,7 @@ class ExecutorTests: XCTestCase {
     }
 
     func testMainExecute() {
-        let expectation = expectationWithDescription(name)
+        let expectation = expectationWithDescription(currentTestName)
 
         var finished = false
         Executor.MainThread.execute {
@@ -52,20 +52,24 @@ class ExecutorTests: XCTestCase {
     }
 
     func testQueueExecute() {
-        let expectation = expectationWithDescription(name)
+        let expectation = expectationWithDescription(currentTestName)
+                let semaphore = dispatch_semaphore_create(0)
         var finished = false
 
         Executor.Queue(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)).execute {
-            expectation.fulfill()
+            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
             finished = true
+            expectation.fulfill()
         }
 
         XCTAssertFalse(finished)
+        dispatch_semaphore_signal(semaphore)
         waitForExpectationsWithTimeout(0.5, handler: nil)
+        XCTAssertTrue(finished)
     }
 
     func testClosureExecute() {
-        let expectation = expectationWithDescription(name)
+        let expectation = expectationWithDescription(currentTestName)
 
         Executor.Closure { closure in
             closure()
@@ -77,17 +81,21 @@ class ExecutorTests: XCTestCase {
     }
 
     func testOperationQueueExecute() {
-        let expectation = expectationWithDescription(name)
-        let operationQueue = NSOperationQueue()
+        let expectation = expectationWithDescription(currentTestName)
+        let semaphore = dispatch_semaphore_create(0)
         var finished = false
 
+        let operationQueue = NSOperationQueue()
         Executor.OperationQueue(operationQueue).execute {
-            expectation.fulfill()
+            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
             finished = true
+            expectation.fulfill()
         }
 
         XCTAssertFalse(finished)
+        dispatch_semaphore_signal(semaphore)
         waitForExpectationsWithTimeout(0.5, handler: nil)
+        XCTAssertTrue(finished)
     }
 
     // MARK: Descriptions
