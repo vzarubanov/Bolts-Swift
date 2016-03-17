@@ -53,15 +53,19 @@ class ExecutorTests: XCTestCase {
 
     func testQueueExecute() {
         let expectation = expectationWithDescription(currentTestName)
+                let semaphore = dispatch_semaphore_create(0)
         var finished = false
 
         Executor.Queue(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)).execute {
-            expectation.fulfill()
+            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
             finished = true
+            expectation.fulfill()
         }
 
         XCTAssertFalse(finished)
+        dispatch_semaphore_signal(semaphore)
         waitForExpectationsWithTimeout(0.5, handler: nil)
+        XCTAssertTrue(finished)
     }
 
     func testClosureExecute() {
@@ -78,16 +82,20 @@ class ExecutorTests: XCTestCase {
 
     func testOperationQueueExecute() {
         let expectation = expectationWithDescription(currentTestName)
-        let operationQueue = NSOperationQueue()
+        let semaphore = dispatch_semaphore_create(0)
         var finished = false
 
+        let operationQueue = NSOperationQueue()
         Executor.OperationQueue(operationQueue).execute {
-            expectation.fulfill()
+            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
             finished = true
+            expectation.fulfill()
         }
 
         XCTAssertFalse(finished)
+        dispatch_semaphore_signal(semaphore)
         waitForExpectationsWithTimeout(0.5, handler: nil)
+        XCTAssertTrue(finished)
     }
 
     // MARK: Descriptions
