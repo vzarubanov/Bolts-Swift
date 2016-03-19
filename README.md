@@ -95,7 +95,7 @@ After you create a `TaskCompletionSource`, you need to call `setResult()`/`setEr
 ```swift
 func fetch(object: PFObject) -> Task<PFObject> {
   let taskCompletionSource = TaskCompletionSource<PFObject>()
-  object.fetchInBackgroundWithBlock() { object?, error? 
+  object.fetchInBackgroundWithBlock() { (object: PFObject?, error: NSError?) in
     if let error = error {
       taskCompletionSource.setError(error)
     } else if let object = object {
