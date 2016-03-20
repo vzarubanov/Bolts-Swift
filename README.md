@@ -110,7 +110,7 @@ func fetch(object: PFObject) -> Task<PFObject> {
 
 ## Tasks in Parallel
 
-You can also perfrom several tasks in parallel and chain the result of all of them using `whenAll()` function.
+You can also perform several tasks in parallel and chain the result of all of them using `whenAll()` function.
 ```swift
 let query = PFQuery(className: "Comments")
 find(query).continueWithTask { task in
