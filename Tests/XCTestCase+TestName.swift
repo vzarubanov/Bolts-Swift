@@ -18,4 +18,11 @@ extension XCTestCase {
     var currentTestName: String {
         return name ?? "test"
     }
+
+    /**
+     Waits for all test expectations with a default timeout.
+     */
+    func waitForTestExpectations() {
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
 }
