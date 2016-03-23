@@ -30,12 +30,15 @@ script:
     if [ "$TEST_TYPE" = iOS ]; then
       set -o pipefail
       xcodebuild test -project BoltsSwift.xcodeproj -sdk iphonesimulator -scheme BoltsSwift-iOS -configuration Debug -destination "platform=iOS Simulator,name=iPhone 4s" -destination "platform=iOS Simulator,name=iPhone 6 Plus" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty -c
+      xcodebuild test -project BoltsSwift.xcodeproj -sdk iphonesimulator -scheme BoltsSwift-iOS -configuration Release -destination "platform=iOS Simulator,name=iPhone 4s" -destination "platform=iOS Simulator,name=iPhone 6 Plus" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty -c
     elif [ "$TEST_TYPE" = OSX ]; then
       set -o pipefail
       xcodebuild test -project BoltsSwift.xcodeproj -sdk macosx -scheme BoltsSwift-OSX -configuration Debug GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty -c
+      xcodebuild test -project BoltsSwift.xcodeproj -sdk macosx -scheme BoltsSwift-OSX -configuration Release GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty -c
     elif [ "$TEST_TYPE" = tvOS ]; then
       set -o pipefail
       xcodebuild test -project BoltsSwift.xcodeproj -sdk appletvsimulator -scheme BoltsSwift-tvOS -destination "platform=tvOS Simulator,name=Apple TV 1080p" -configuration Debug GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty -c
+      xcodebuild test -project BoltsSwift.xcodeproj -sdk appletvsimulator -scheme BoltsSwift-tvOS -destination "platform=tvOS Simulator,name=Apple TV 1080p" -configuration Release GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty -c
     elif [ "$TEST_TYPE" = CocoaPods ]; then
       pod lib lint Bolts-Swift.podspec
     elif [ "$TEST_TYPE" = Carthage ]; then
