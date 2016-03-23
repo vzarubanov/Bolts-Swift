@@ -57,7 +57,7 @@ class TaskTests: XCTestCase {
         }
 
         XCTAssertFalse(task.completed)
-        waitForExpectationsWithTimeout(0.5, handler: nil)
+        waitForTestExpectations()
     }
 
     // MARK: Execute
@@ -68,7 +68,7 @@ class TaskTests: XCTestCase {
             expectation.fulfill()
             return "Hello, World!"
         }
-        waitForExpectationsWithTimeout(0.5, handler: nil)
+        waitForTestExpectations()
         XCTAssertEqual(task.result, "Hello, World!")
     }
 
@@ -78,7 +78,7 @@ class TaskTests: XCTestCase {
             expectation.fulfill()
             return self.currentTestName
         }
-        waitForExpectationsWithTimeout(0.5, handler: nil)
+        waitForTestExpectations()
         XCTAssertNotNil(task.result)
         XCTAssertEqual(task.result, name)
     }
@@ -89,7 +89,7 @@ class TaskTests: XCTestCase {
             expectation.fulfill()
             return Task(10)
         }
-        waitForExpectationsWithTimeout(0.5, handler: nil)
+        waitForTestExpectations()
         XCTAssertNotNil(task.result)
         XCTAssertEqual(task.result, 10)
     }
@@ -100,7 +100,7 @@ class TaskTests: XCTestCase {
             expectation.fulfill()
             return Task<Void>.cancelledTask()
         }
-        waitForExpectationsWithTimeout(0.5, handler: nil)
+        waitForTestExpectations()
         XCTAssertTrue(task.cancelled)
     }
 
@@ -119,7 +119,7 @@ class TaskTests: XCTestCase {
             XCTAssertEqual($0, self.name)
             expectation.fulfill()
         }
-        waitForExpectationsWithTimeout(0.5, handler: nil)
+        waitForTestExpectations()
     }
 
     func testContinueWithOnErroredTaskByReturningResult() {
@@ -136,7 +136,7 @@ class TaskTests: XCTestCase {
             XCTAssertEqual($0, self.name)
             expectation.fulfill()
         }
-        waitForExpectationsWithTimeout(0.5, handler: nil)
+        waitForTestExpectations()
     }
 
     func testContinueWithOnCancelledTaskByReturningResult() {
@@ -152,7 +152,7 @@ class TaskTests: XCTestCase {
             XCTAssertEqual($0, self.name)
             expectation.fulfill()
         }
-        waitForExpectationsWithTimeout(0.5, handler: nil)
+        waitForTestExpectations()
     }
 
     func testContinueWithWithExecutor() {
@@ -174,7 +174,7 @@ class TaskTests: XCTestCase {
             XCTAssertEqual($0, self.name)
             expectation.fulfill()
         }
-        waitForExpectationsWithTimeout(0.5, handler: nil)
+        waitForTestExpectations()
     }
 
     func testContinueWithByReturningNilResult() {
@@ -190,7 +190,7 @@ class TaskTests: XCTestCase {
             XCTAssertNil($0)
             expectation.fulfill()
         }
-        waitForExpectationsWithTimeout(0.5, handler: nil)
+        waitForTestExpectations()
     }
 
     func testContinueWithByReturningTask() {
@@ -208,7 +208,7 @@ class TaskTests: XCTestCase {
             XCTAssertEqual($0, self.name)
             expectation.fulfill()
         }
-        waitForExpectationsWithTimeout(0.5, handler: nil)
+        waitForTestExpectations()
     }
 
     func testContinueWithByReturningNilTask() {
@@ -222,7 +222,7 @@ class TaskTests: XCTestCase {
         continuationTask.continueWith { task in
             expectation.fulfill()
         }
-        waitForExpectationsWithTimeout(0.5, handler: nil)
+        waitForTestExpectations()
     }
 
     func testChainedContinueWithFunctions() {
@@ -252,7 +252,7 @@ class TaskTests: XCTestCase {
                 return nil
         }
 
-        waitForExpectationsWithTimeout(0.5, handler: nil)
+        waitForTestExpectations()
     }
 
     func testChainedContinueWithWithAsyncExecutor() {
@@ -278,7 +278,7 @@ class TaskTests: XCTestCase {
                 expectation.fulfill()
         }
 
-        waitForExpectationsWithTimeout(0.5, handler: nil)
+        waitForTestExpectations()
     }
 
     // MARK: WhenAll
@@ -340,7 +340,7 @@ class TaskTests: XCTestCase {
         XCTAssertFalse(task.faulted)
         XCTAssertFalse(task.cancelled)
 
-        waitForExpectationsWithTimeout(5.0, handler: nil)
+        waitForTestExpectations()
     }
 
     func testWhenAllTasksWithCancel() {
@@ -373,8 +373,7 @@ class TaskTests: XCTestCase {
         XCTAssertFalse(task.faulted)
         XCTAssertFalse(task.cancelled)
 
-        waitForExpectationsWithTimeout(5.0, handler: nil)
-
+        waitForTestExpectations()
     }
 
     // MARK: When Any
@@ -406,7 +405,7 @@ class TaskTests: XCTestCase {
         XCTAssertFalse(task.faulted)
         XCTAssertFalse(task.cancelled)
 
-        waitForExpectationsWithTimeout(0.5, handler: nil)
+        waitForTestExpectations()
     }
 
     func testWhenAnyTasksWithErrors() {
@@ -438,7 +437,7 @@ class TaskTests: XCTestCase {
         XCTAssertFalse(task.faulted)
         XCTAssertFalse(task.cancelled)
 
-        waitForExpectationsWithTimeout(0.5, handler: nil)
+        waitForTestExpectations()
     }
 
     func testWhenAnyTasksWithCancel() {
@@ -469,7 +468,7 @@ class TaskTests: XCTestCase {
         XCTAssertFalse(task.faulted)
         XCTAssertFalse(task.cancelled)
 
-        waitForExpectationsWithTimeout(0.5, handler: nil)
+        waitForTestExpectations()
     }
 
     // MARK: Wait

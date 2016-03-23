@@ -22,7 +22,7 @@ class ExecutorTests: XCTestCase {
         }
 
         XCTAssertTrue(finished)
-        waitForExpectationsWithTimeout(0.5, handler: nil)
+        waitForTestExpectations()
     }
 
     func testImmediateExecute() {
@@ -35,7 +35,7 @@ class ExecutorTests: XCTestCase {
         }
 
         XCTAssertTrue(finished)
-        waitForExpectationsWithTimeout(0.5, handler: nil)
+        waitForTestExpectations()
     }
 
     func testMainExecute() {
@@ -48,7 +48,7 @@ class ExecutorTests: XCTestCase {
         }
 
         XCTAssertTrue(NSThread.currentThread().isMainThread || !finished)
-        waitForExpectationsWithTimeout(0.5, handler: nil)
+        waitForTestExpectations()
     }
 
     func testQueueExecute() {
@@ -64,7 +64,7 @@ class ExecutorTests: XCTestCase {
 
         XCTAssertFalse(finished)
         dispatch_semaphore_signal(semaphore)
-        waitForExpectationsWithTimeout(0.5, handler: nil)
+        waitForTestExpectations()
         XCTAssertTrue(finished)
     }
 
@@ -77,7 +77,7 @@ class ExecutorTests: XCTestCase {
                 expectation.fulfill()
         }
 
-        waitForExpectationsWithTimeout(0.5, handler: nil)
+        waitForTestExpectations()
     }
 
     func testOperationQueueExecute() {
@@ -94,7 +94,7 @@ class ExecutorTests: XCTestCase {
 
         XCTAssertFalse(finished)
         dispatch_semaphore_signal(semaphore)
-        waitForExpectationsWithTimeout(0.5, handler: nil)
+        waitForTestExpectations()
         XCTAssertTrue(finished)
     }
 
