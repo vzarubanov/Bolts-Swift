@@ -47,7 +47,9 @@ public class TaskCompletionSource<TResult> {
      - parameter result: The task result.
      */
     public func setResult(result: TResult) {
-        assert(task.trySetState(.Success(result)), "Can not set the result on a completed task.")
+        guard task.trySetState(.Success(result)) else {
+            preconditionFailure("Can not set the result on a completed task.")
+        }
     }
 
     /**
@@ -58,7 +60,9 @@ public class TaskCompletionSource<TResult> {
      - parameter error: The task error.
      */
     public func setError(error: ErrorType) {
-        assert(task.trySetState(.Error(error)), "Can not set error on a completed task.")
+        guard task.trySetState(.Error(error)) else {
+            preconditionFailure("Can not set error on a completed task.")
+        }
     }
 
     /**
@@ -67,7 +71,9 @@ public class TaskCompletionSource<TResult> {
      Throws an exception if the task is already completed.
      */
     public func cancel() {
-        assert(task.trySetState(.Cancelled), "Can not cancel a completed task.")
+        guard task.trySetState(.Cancelled) else {
+            preconditionFailure("Can not cancel a completed task.")
+        }
     }
 
     /**
@@ -104,6 +110,8 @@ public class TaskCompletionSource<TResult> {
     //--------------------------------------
 
     func setState(state: TaskState<TResult>) {
-        assert(task.trySetState(state), "Can not complete a completed task.")
+        guard task.trySetState(state) else {
+            preconditionFailure("Can not complete a completed task.")
+        }
     }
 }
