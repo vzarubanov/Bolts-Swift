@@ -288,7 +288,7 @@ class TaskTests: XCTestCase {
         var count: Int32 = 0
 
         for i in 1...20 {
-            let task = Task<Void>.withDelay(NSTimeInterval(rand() % 10) / 100)
+            let task = Task<Void>.withDelay(0.5)
                 .continueWith(continuation: { task -> Int in
                     OSAtomicIncrement32(&count)
                     return i
@@ -318,7 +318,7 @@ class TaskTests: XCTestCase {
         let executor = Executor.Queue(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0))
 
         for i in 1...20 {
-            let task = Task<Void>.withDelay(NSTimeInterval(rand() % 10) / 100)
+            let task = Task<Void>.withDelay(0.5)
                 .continueWith(executor, continuation: { task -> Int in
                     OSAtomicIncrement32(&count)
                     return i
@@ -349,7 +349,7 @@ class TaskTests: XCTestCase {
         let executor = Executor.Queue(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0))
 
         for i in 1...20 {
-            let task = Task<Void>.withDelay(NSTimeInterval(rand() % 10) / 100)
+            let task = Task<Void>.withDelay(0.5)
                 .continueWithTask(executor, continuation: { task -> Task<Int> in
                     OSAtomicIncrement32(&count)
                     if i == 20 {
@@ -383,8 +383,11 @@ class TaskTests: XCTestCase {
         var count: Int32 = 0
         let executor = Executor.Queue(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0))
 
+        tasks.append(Task<Void>.withDelay(0.2).continueWith { task in
+            return Int(rand())
+        })
         for i in 1...20 {
-            let task = Task<Void>.withDelay(NSTimeInterval(rand() % 100) / 100)
+            let task = Task<Void>.withDelay(0.5)
                 .continueWith(executor, continuation: { task -> Int in
                     OSAtomicIncrement32(&count)
                     return i
@@ -416,7 +419,7 @@ class TaskTests: XCTestCase {
         let error = NSError(domain: "com.bolts", code: 1, userInfo: nil)
 
         for _ in 1...20 {
-            let task = Task<Void>.withDelay(NSTimeInterval(rand() % 100) / 100)
+            let task = Task<Void>.withDelay(0.5)
                 .continueWithTask(executor, continuation: { task -> Task<Void> in
                     OSAtomicIncrement32(&count)
                     return Task(error: error)
@@ -447,7 +450,7 @@ class TaskTests: XCTestCase {
         let executor = Executor.Queue(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0))
 
         for _ in 1...20 {
-            let task = Task<Void>.withDelay(NSTimeInterval(rand() % 100) / 100)
+            let task = Task<Void>.withDelay(0.5)
                 .continueWithTask(executor, continuation: { task -> Task<Int> in
                     OSAtomicIncrement32(&count)
                     return Task.cancelledTask()
