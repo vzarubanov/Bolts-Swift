@@ -9,10 +9,11 @@
 
 import Foundation
 
-///
-/// An error type that contains or more underlying errors
-///
+/**
+ An error type that contains one or more underlying errors.
+ */
 public struct AggregateError: ErrorType {
+    /// An array of errors that are aggregated into this one.
     public let errors: [ErrorType]
 
     init(errors: [ErrorType]) {
@@ -20,9 +21,9 @@ public struct AggregateError: ErrorType {
     }
 }
 
-///
-/// An error type that indicates that the task was cancelled.
-///
-/// Return this from a closure to propagate to the `task.cancelled` property.
-///
+/**
+ An error type that indicates that the task was cancelled.
+
+ Return or throw this from a continuation closure to propagate to the `task.cancelled` property.
+ */
 public struct CancelledError: ErrorType { }
