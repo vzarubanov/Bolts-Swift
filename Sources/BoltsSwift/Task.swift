@@ -515,10 +515,12 @@ extension Task {
 //--------------------------------------
 
 extension Task: CustomStringConvertible, CustomDebugStringConvertible {
+    /// A textual representation of `self`.
     public var description: String {
         return "Task: \(self.state)"
     }
 
+    /// A textual representation of `self`, suitable for debugging.
     public var debugDescription: String {
         return "Task: \(self.state)"
     }
