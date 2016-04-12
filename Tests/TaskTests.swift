@@ -104,6 +104,31 @@ class TaskTests: XCTestCase {
         XCTAssertTrue(task.cancelled)
     }
 
+    func textExecuteWithClosureThrowingError() {
+        let expectation = expectationWithDescription(currentTestName)
+        let task = Task<String>.execute {
+            defer {
+                expectation.fulfill()
+            }
+            throw NSError(domain: "com.bolts", code: 1, userInfo: nil)
+        }
+        waitForTestExpectations()
+        XCTAssertNotNil(task.error)
+    }
+
+    func testExecuteWithClosureThrowingCancelledError() {
+        let expectation = expectationWithDescription(currentTestName)
+        let task = Task<String>.execute {
+            defer {
+                expectation.fulfill()
+            }
+            throw CancelledError()
+        }
+        waitForTestExpectations()
+        XCTAssertTrue(task.cancelled)
+        XCTAssertNil(task.error)
+    }
+
     // MARK: Continuations
 
     func testContinueWithOnSucessfulTaskByReturningResult() {
