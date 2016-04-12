@@ -25,7 +25,8 @@ public enum Executor {
     case Immediate
 
     /**
-     Calls closures on the main dispatch queue.
+     Calls closures on the main thread.
+     Will execute synchronously if already on the main thread, otherwise - will execute asynchronously.
      */
     case MainThread
 
