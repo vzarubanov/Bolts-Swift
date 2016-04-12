@@ -26,4 +26,9 @@ public struct AggregateError: ErrorType {
 
  Return or throw this from a continuation closure to propagate to the `task.cancelled` property.
  */
-public struct CancelledError: ErrorType { }
+public struct CancelledError: ErrorType {
+    /**
+     Initializes a Cancelled Error.
+     */
+    public init() { }
+}
