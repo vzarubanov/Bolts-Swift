@@ -38,7 +38,7 @@ class ExecutorTests: XCTestCase {
         waitForTestExpectations()
     }
 
-    func testMainExecute() {
+    func testMainThreadSyncExecute() {
         let expectation = expectationWithDescription(currentTestName)
 
         var finished = false
@@ -47,8 +47,22 @@ class ExecutorTests: XCTestCase {
             finished = true
         }
 
-        XCTAssertTrue(NSThread.currentThread().isMainThread || !finished)
+        XCTAssertTrue(finished)
         waitForTestExpectations()
+    }
+
+    func testMainThreadAsyncExecute() {
+        let expectation = expectationWithDescription(currentTestName)
+
+        var finished = false
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            Executor.MainThread.execute {
+                finished = true
+                expectation.fulfill()
+            }
+        }
+        waitForTestExpectations()
+        XCTAssertTrue(finished)
     }
 
     func testQueueExecute() {

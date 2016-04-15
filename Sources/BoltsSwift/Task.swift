@@ -102,7 +102,7 @@ public final class Task<TResult> {
     }
 
     /**
-     Creates a task that will continue with the task returned by the given closure.
+     Creates a task that will have the result returned by the given closure.
 
      - parameter executor: Determines how the the closure is called. The default is to call the closure immediately.
      - parameter closure:  The closure that returns the continuation task.
