@@ -102,7 +102,7 @@ public final class Task<TResult> {
     }
 
     /**
-     Creates a task that will have the result returned by the given closure.
+     Creates a task that will continue with the task returned by the given closure.
 
      - parameter executor: Determines how the the closure is called. The default is to call the closure immediately.
      - parameter closure:  The closure that returns the continuation task.
@@ -123,9 +123,9 @@ public final class Task<TResult> {
 
      - returns: A task that will continue with the task returned by the given closure.
      */
-    public class func executeWithTask(executor: Executor = .Default, closure: (() -> Task)) -> Task {
-        return emptyTask().continueWithTask(executor) { task in
-            return closure()
+    public class func executeWithTask(executor: Executor = .Default, closure: (() throws -> Task)) -> Task {
+        return emptyTask().continueWithTask(executor) { _ in
+            return try closure()
         }
     }
 
@@ -141,9 +141,10 @@ public final class Task<TResult> {
      */
     public func continueWith<S>(executor: Executor = .Default, continuation: (Task throws -> S)) -> Task<S> {
         return continueWithTask(executor) { task in
-            return Task<S>(state: TaskState.fromClosure {
+            let state = TaskState.fromClosure({
                 try continuation(task)
-                })
+            })
+            return Task<S>(state: state)
         }
     }
 
@@ -155,20 +156,28 @@ public final class Task<TResult> {
 
      - returns: A task that will be completed when a task returned from a closure is completed.
      */
-    public func continueWithTask<S>(executor: Executor = .Default, continuation: (Task -> Task<S>)) -> Task<S> {
+    public func continueWithTask<S>(executor: Executor = .Default, continuation: (Task throws -> Task<S>)) -> Task<S> {
         let taskCompletionSource = TaskCompletionSource<S>()
         let wrapperContinuation = {
             executor.execute {
-                let nextTask = continuation(self)
-                let taskState = nextTask.state
-
-                switch taskState {
-                case .Pending:
-                    nextTask.continueWith { nextTask in
+                let wrappedState = TaskState<Task<S>>.fromClosure {
+                    try continuation(self)
+                }
+                switch wrappedState {
+                case .Success(let nextTask):
+                    switch nextTask.state {
+                    case .Pending:
+                        nextTask.continueWith { nextTask in
+                            taskCompletionSource.setState(nextTask.state)
+                        }
+                    default:
                         taskCompletionSource.setState(nextTask.state)
                     }
-                default:
-                    taskCompletionSource.setState(taskState)
+                case .Error(let error):
+                    taskCompletionSource.setError(error)
+                case .Cancelled:
+                    taskCompletionSource.cancel()
+                default: abort() // This should never happen.
                 }
             }
         }
@@ -186,9 +195,10 @@ public final class Task<TResult> {
      */
     public func continueOnSuccessWith<S>(executor: Executor = .Default, continuation: (TResult throws -> S)) -> Task<S> {
         return continueOnSuccessWithTask(executor) { taskResult in
-            return Task<S>(state: TaskState.fromClosure {
+            let state = TaskState.fromClosure({
                 try continuation(taskResult)
-                })
+            })
+            return Task<S>(state: state)
         }
     }
 
@@ -200,11 +210,11 @@ public final class Task<TResult> {
 
      - returns: A task that will be completed when a task returned from a closure is completed.
      */
-    public func continueOnSuccessWithTask<S>(executor: Executor = .Default, continuation: (TResult -> Task<S>)) -> Task<S> {
+    public func continueOnSuccessWithTask<S>(executor: Executor = .Default, continuation: (TResult throws -> Task<S>)) -> Task<S> {
         return continueWithTask(executor) { task in
             switch task.state {
             case .Success(let result):
-                return continuation(result)
+                return try continuation(result)
             case .Cancelled:
                 return Task<S>.cancelledTask()
             case .Error(let error):
