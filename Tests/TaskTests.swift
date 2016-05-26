@@ -596,8 +596,8 @@ class TaskTests: XCTestCase {
 
         let executor = Executor.Queue(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0))
 
-        for _ in 1...20 {
-            let task = Task<Void>.withDelay(0.5)
+        for i in 1...20 {
+            let task = Task<Void>.withDelay(Double(i) * 0.5)
                 .continueWithTask(executor, continuation: { task -> Task<Int> in
                     OSAtomicIncrement32(&count)
                     return Task.cancelledTask()
