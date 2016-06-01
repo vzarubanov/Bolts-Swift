@@ -26,6 +26,19 @@ enum TaskState<TResult> {
     }
 }
 
+struct TaskContinuationOptions: OptionSetType {
+    let rawValue: Int
+    init(rawValue: Int) {
+        self.rawValue = rawValue
+    }
+
+    static let RunOnSuccess = TaskContinuationOptions(rawValue: 1 << 0)
+    static let RunOnError = TaskContinuationOptions(rawValue: 1 << 1)
+    static let RunOnCancelled = TaskContinuationOptions(rawValue: 1 << 2)
+
+    static let RunAlways: TaskContinuationOptions = [ .RunOnSuccess, .RunOnError, .RunOnCancelled ]
+}
+
 //--------------------------------------
 // MARK: - Task
 //--------------------------------------
@@ -157,32 +170,7 @@ public final class Task<TResult> {
      - returns: A task that will be completed when a task returned from a closure is completed.
      */
     public func continueWithTask<S>(executor: Executor = .Default, continuation: (Task throws -> Task<S>)) -> Task<S> {
-        let taskCompletionSource = TaskCompletionSource<S>()
-        let wrapperContinuation = {
-            executor.execute {
-                let wrappedState = TaskState<Task<S>>.fromClosure {
-                    try continuation(self)
-                }
-                switch wrappedState {
-                case .Success(let nextTask):
-                    switch nextTask.state {
-                    case .Pending:
-                        nextTask.continueWith { nextTask in
-                            taskCompletionSource.setState(nextTask.state)
-                        }
-                    default:
-                        taskCompletionSource.setState(nextTask.state)
-                    }
-                case .Error(let error):
-                    taskCompletionSource.setError(error)
-                case .Cancelled:
-                    taskCompletionSource.cancel()
-                default: abort() // This should never happen.
-                }
-            }
-        }
-        appendOrRunContinuation(wrapperContinuation)
-        return taskCompletionSource.task
+        return continueWithTask(executor, options: .RunAlways, continuation: continuation)
     }
 
     /**
@@ -211,17 +199,8 @@ public final class Task<TResult> {
      - returns: A task that will be completed when a task returned from a closure is completed.
      */
     public func continueOnSuccessWithTask<S>(executor: Executor = .Default, continuation: (TResult throws -> Task<S>)) -> Task<S> {
-        return continueWithTask(executor) { task in
-            switch task.state {
-            case .Success(let result):
-                return try continuation(result)
-            case .Cancelled:
-                return Task<S>.cancelledTask()
-            case .Error(let error):
-                return Task<S>(state: .Error(error))
-            default:
-                abort() // This should never happen.
-            }
+        return continueWithTask(executor, options: .RunOnSuccess) { task in
+            return try continuation(task.result!)
         }
     }
 
@@ -285,17 +264,8 @@ public final class Task<TResult> {
      - returns: A task that will be completed when a task returned from a closure is completed.
      */
     public func continueOnErrorWithTask(executor: Executor = .Default, continuation: (ErrorType throws -> Task)) -> Task {
-        return continueWithTask(executor) { task in
-            switch task.state {
-            case .Success(let result):
-                return Task(result)
-            case .Cancelled:
-                return Task.cancelledTask()
-            case .Error(let error):
-                return try continuation(error)
-            default:
-                abort() // This should never happen.
-            }
+        return continueWithTask(executor, options: .RunOnError) { task in
+            return try continuation(task.error!)
         }
     }
 
@@ -427,6 +397,53 @@ public final class Task<TResult> {
             value = self._state
         }
         return value!
+    }
+
+    private func continueWithTask<S>(executor: Executor = .Default, options: TaskContinuationOptions, continuation: (Task throws -> Task<S>)) -> Task<S> {
+        let taskCompletionSource = TaskCompletionSource<S>()
+        let wrapperContinuation = {
+            switch self.state {
+            case .Success where options.contains(.RunOnSuccess): fallthrough
+            case .Error where options.contains(.RunOnError): fallthrough
+            case .Cancelled where options.contains(.RunOnCancelled):
+                executor.execute {
+                    let wrappedState = TaskState<Task<S>>.fromClosure {
+                        try continuation(self)
+                    }
+                    switch wrappedState {
+                    case .Success(let nextTask):
+                        switch nextTask.state {
+                        case .Pending:
+                            nextTask.continueWith { nextTask in
+                                taskCompletionSource.setState(nextTask.state)
+                            }
+                        default:
+                            taskCompletionSource.setState(nextTask.state)
+                        }
+                    case .Error(let error):
+                        taskCompletionSource.setError(error)
+                    case .Cancelled:
+                        taskCompletionSource.cancel()
+                    default: abort() // This should never happen.
+                    }
+                }
+
+            case .Success(let result as S):
+                // This is for continueOnErrorWith - the type of the result doesn't change, so we can pass it through
+                taskCompletionSource.setResult(result)
+
+            case .Error(let error):
+                taskCompletionSource.setError(error)
+
+            case .Cancelled:
+                taskCompletionSource.cancel()
+
+            default:
+                fatalError("Task was in an invalid state \(self.state)")
+            }
+        }
+        appendOrRunContinuation(wrapperContinuation)
+        return taskCompletionSource.task
     }
 }
 
