@@ -23,7 +23,10 @@ extension Task {
 
      - returns: The task resulting from the continuation
      */
-    private func continueWithTask<S>(executor: Executor, options: TaskContinuationOptions, continuation: (Task throws -> Task<S>)) -> Task<S> {
+    private func continueWithTask<S>(executor: Executor,
+                                  options: TaskContinuationOptions,
+                                  continuation: (Task throws -> Task<S>)
+        ) -> Task<S> {
         let taskCompletionSource = TaskCompletionSource<S>()
         let wrapperContinuation = {
             switch self.state {
