@@ -16,7 +16,21 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "81CC14EB1A9BE0A100B28F86"
                BuildableName = "BoltsSwift.framework"
-               BlueprintName = "BoltsSwift-OSX"
+               BlueprintName = "BoltsSwift-macOS"
+               ReferencedContainer = "container:BoltsSwift.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "81CC14F51A9BE0A100B28F86"
+               BuildableName = "BoltsSwiftTests.xctest"
+               BlueprintName = "BoltsSwiftTests-macOS"
                ReferencedContainer = "container:BoltsSwift.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -35,7 +49,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "81CC14F51A9BE0A100B28F86"
                BuildableName = "BoltsSwiftTests.xctest"
-               BlueprintName = "BoltsSwiftTests-OSX"
+               BlueprintName = "BoltsSwiftTests-macOS"
                ReferencedContainer = "container:BoltsSwift.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -45,7 +59,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "81CC14EB1A9BE0A100B28F86"
             BuildableName = "BoltsSwift.framework"
-            BlueprintName = "BoltsSwift-OSX"
+            BlueprintName = "BoltsSwift-macOS"
             ReferencedContainer = "container:BoltsSwift.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -67,7 +81,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "81CC14EB1A9BE0A100B28F86"
             BuildableName = "BoltsSwift.framework"
-            BlueprintName = "BoltsSwift-OSX"
+            BlueprintName = "BoltsSwift-macOS"
             ReferencedContainer = "container:BoltsSwift.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -85,7 +99,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "81CC14EB1A9BE0A100B28F86"
             BuildableName = "BoltsSwift.framework"
-            BlueprintName = "BoltsSwift-OSX"
+            BlueprintName = "BoltsSwift-macOS"
             ReferencedContainer = "container:BoltsSwift.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
