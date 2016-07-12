@@ -403,9 +403,9 @@
 			productReference = 0658951B1C9A947B000FDDA6 /* BoltsSwiftTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		81CC14EB1A9BE0A100B28F86 /* BoltsSwift-OSX */ = {
+		81CC14EB1A9BE0A100B28F86 /* BoltsSwift-macOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 81CC14FF1A9BE0A100B28F86 /* Build configuration list for PBXNativeTarget "BoltsSwift-OSX" */;
+			buildConfigurationList = 81CC14FF1A9BE0A100B28F86 /* Build configuration list for PBXNativeTarget "BoltsSwift-macOS" */;
 			buildPhases = (
 				81CC14E71A9BE0A100B28F86 /* Sources */,
 				81CC14E81A9BE0A100B28F86 /* Frameworks */,
@@ -416,14 +416,14 @@
 			);
 			dependencies = (
 			);
-			name = "BoltsSwift-OSX";
+			name = "BoltsSwift-macOS";
 			productName = "Bolts-Mac";
 			productReference = 81CC14EC1A9BE0A100B28F86 /* BoltsSwift.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		81CC14F51A9BE0A100B28F86 /* BoltsSwiftTests-OSX */ = {
+		81CC14F51A9BE0A100B28F86 /* BoltsSwiftTests-macOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 81CC15021A9BE0A100B28F86 /* Build configuration list for PBXNativeTarget "BoltsSwiftTests-OSX" */;
+			buildConfigurationList = 81CC15021A9BE0A100B28F86 /* Build configuration list for PBXNativeTarget "BoltsSwiftTests-macOS" */;
 			buildPhases = (
 				81CC14F21A9BE0A100B28F86 /* Sources */,
 				81CC14F31A9BE0A100B28F86 /* Frameworks */,
@@ -434,7 +434,7 @@
 			dependencies = (
 				81CC14F91A9BE0A100B28F86 /* PBXTargetDependency */,
 			);
-			name = "BoltsSwiftTests-OSX";
+			name = "BoltsSwiftTests-macOS";
 			productName = "Bolts-MacTests";
 			productReference = 81CC14F61A9BE0A100B28F86 /* BoltsSwiftTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -519,8 +519,8 @@
 			targets = (
 				87FEF3651A9085FA00C60678 /* BoltsSwift-iOS */,
 				87FEF3701A9085FA00C60678 /* BoltsSwiftTests-iOS */,
-				81CC14EB1A9BE0A100B28F86 /* BoltsSwift-OSX */,
-				81CC14F51A9BE0A100B28F86 /* BoltsSwiftTests-OSX */,
+				81CC14EB1A9BE0A100B28F86 /* BoltsSwift-macOS */,
+				81CC14F51A9BE0A100B28F86 /* BoltsSwiftTests-macOS */,
 				065894F31C9A93B7000FDDA6 /* BoltsSwift-tvOS */,
 				0658950E1C9A947B000FDDA6 /* BoltsSwiftTests-tvOS */,
 				065894E61C9A933B000FDDA6 /* BoltsSwift-watchOS */,
@@ -684,7 +684,7 @@
 		};
 		81CC14F91A9BE0A100B28F86 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 81CC14EB1A9BE0A100B28F86 /* BoltsSwift-OSX */;
+			target = 81CC14EB1A9BE0A100B28F86 /* BoltsSwift-macOS */;
 			targetProxy = 81CC14F81A9BE0A100B28F86 /* PBXContainerItemProxy */;
 		};
 		87FEF3741A9085FA00C60678 /* PBXTargetDependency */ = {
@@ -837,7 +837,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		81CC14FF1A9BE0A100B28F86 /* Build configuration list for PBXNativeTarget "BoltsSwift-OSX" */ = {
+		81CC14FF1A9BE0A100B28F86 /* Build configuration list for PBXNativeTarget "BoltsSwift-macOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				81CC15001A9BE0A100B28F86 /* Debug */,
@@ -846,7 +846,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		81CC15021A9BE0A100B28F86 /* Build configuration list for PBXNativeTarget "BoltsSwiftTests-OSX" */ = {
+		81CC15021A9BE0A100B28F86 /* Build configuration list for PBXNativeTarget "BoltsSwiftTests-macOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				81CC15031A9BE0A100B28F86 /* Debug */,
