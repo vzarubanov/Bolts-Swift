@@ -104,6 +104,7 @@
 		812DB53B1D3597BF00552C9F /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		812DB53C1D3597BF00552C9F /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		812DB53D1D3597BF00552C9F /* Warnings.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Warnings.xcconfig; sourceTree = "<group>"; };
+		81951A901D46BA2F00958108 /* Version.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Version.xcconfig; sourceTree = "<group>"; };
 		81CC14EC1A9BE0A100B28F86 /* BoltsSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BoltsSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81CC14F61A9BE0A100B28F86 /* BoltsSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BoltsSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		81D300631C93AF7300E1A1ED /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
@@ -189,6 +190,7 @@
 				812DB52B1D3597BF00552C9F /* BoltsSwiftTests-iOS.xcconfig */,
 				812DB52C1D3597BF00552C9F /* BoltsSwiftTests-macOS.xcconfig */,
 				812DB52D1D3597BF00552C9F /* BoltsSwiftTests-tvOS.xcconfig */,
+				81951A901D46BA2F00958108 /* Version.xcconfig */,
 				812DB52E1D3597BF00552C9F /* Shared */,
 			);
 			path = Configurations;
