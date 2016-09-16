@@ -119,7 +119,8 @@ extension Task {
      - returns: A task that will be completed when a task returned from a closure is completed.
      */
     @discardableResult
-    public func continueOnSuccessWith<S>(_ executor: Executor = .default, continuation: @escaping ((TResult) throws -> S)) -> Task<S> {
+    public func continueOnSuccessWith<S>(_ executor: Executor = .default,
+                                      continuation: @escaping ((TResult) throws -> S)) -> Task<S> {
         return continueOnSuccessWithTask(executor) { taskResult in
             let state = TaskState.fromClosure({
                 try continuation(taskResult)
@@ -137,7 +138,8 @@ extension Task {
      - returns: A task that will be completed when a task returned from a closure is completed.
      */
     @discardableResult
-    public func continueOnSuccessWithTask<S>(_ executor: Executor = .default, continuation: @escaping ((TResult) throws -> Task<S>)) -> Task<S> {
+    public func continueOnSuccessWithTask<S>(_ executor: Executor = .default,
+                                          continuation: @escaping ((TResult) throws -> Task<S>)) -> Task<S> {
         return continueWithTask(executor, options: .RunOnSuccess) { task in
             return try continuation(task.result!)
         }

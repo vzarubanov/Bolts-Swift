@@ -276,7 +276,6 @@ public final class Task<TResult> {
             default:
                 runContinuation = true
             }
-
         })
         if runContinuation {
             continuation()
