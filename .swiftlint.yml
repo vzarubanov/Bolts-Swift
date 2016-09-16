@@ -5,3 +5,4 @@ opt_in_rules:
   - empty_count
 disabled_rules:
   - cyclomatic_complexity
+  - variable_name

@@ -13,10 +13,10 @@ import BoltsSwift
 class ExecutorTests: XCTestCase {
 
     func testDefaultExecute() {
-        let expectation = expectationWithDescription(currentTestName)
+        let expectation = self.expectation(description: currentTestName)
 
         var finished = false
-        Executor.Default.execute {
+        Executor.default.execute {
             expectation.fulfill()
             finished = true
         }
@@ -26,10 +26,10 @@ class ExecutorTests: XCTestCase {
     }
 
     func testImmediateExecute() {
-        let expectation = expectationWithDescription(currentTestName)
+        let expectation = self.expectation(description: currentTestName)
 
         var finished = false
-        Executor.Immediate.execute {
+        Executor.immediate.execute {
             expectation.fulfill()
             finished = true
         }
@@ -39,10 +39,10 @@ class ExecutorTests: XCTestCase {
     }
 
     func testMainThreadSyncExecute() {
-        let expectation = expectationWithDescription(currentTestName)
+        let expectation = self.expectation(description: currentTestName)
 
         var finished = false
-        Executor.MainThread.execute {
+        Executor.mainThread.execute {
             expectation.fulfill()
             finished = true
         }
@@ -52,11 +52,11 @@ class ExecutorTests: XCTestCase {
     }
 
     func testMainThreadAsyncExecute() {
-        let expectation = expectationWithDescription(currentTestName)
+        let expectation = self.expectation(description: currentTestName)
 
         var finished = false
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-            Executor.MainThread.execute {
+        DispatchQueue.global(qos: .default).async {
+            Executor.mainThread.execute {
                 finished = true
                 expectation.fulfill()
             }
@@ -66,26 +66,26 @@ class ExecutorTests: XCTestCase {
     }
 
     func testQueueExecute() {
-        let expectation = expectationWithDescription(currentTestName)
-                let semaphore = dispatch_semaphore_create(0)
+        let expectation = self.expectation(description: currentTestName)
+                let semaphore = DispatchSemaphore(value: 0)
         var finished = false
 
-        Executor.Queue(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)).execute {
-            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+        Executor.queue(.global(qos: .default)).execute {
+            semaphore.wait()
             finished = true
             expectation.fulfill()
         }
 
         XCTAssertFalse(finished)
-        dispatch_semaphore_signal(semaphore)
+        semaphore.signal()
         waitForTestExpectations()
         XCTAssertTrue(finished)
     }
 
     func testClosureExecute() {
-        let expectation = expectationWithDescription(currentTestName)
+        let expectation = self.expectation(description: currentTestName)
 
-        Executor.Closure { closure in
+        Executor.closure { closure in
             closure()
             }.execute { () -> Void in
                 expectation.fulfill()
@@ -95,19 +95,19 @@ class ExecutorTests: XCTestCase {
     }
 
     func testOperationQueueExecute() {
-        let expectation = expectationWithDescription(currentTestName)
-        let semaphore = dispatch_semaphore_create(0)
+        let expectation = self.expectation(description: currentTestName)
+        let semaphore = DispatchSemaphore(value: 0)
         var finished = false
 
-        let operationQueue = NSOperationQueue()
-        Executor.OperationQueue(operationQueue).execute {
-            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+        let operationQueue = OperationQueue()
+        Executor.operationQueue(operationQueue).execute {
+            semaphore.wait()
             finished = true
             expectation.fulfill()
         }
 
         XCTAssertFalse(finished)
-        dispatch_semaphore_signal(semaphore)
+        semaphore.signal()
         waitForTestExpectations()
         XCTAssertTrue(finished)
     }
@@ -115,20 +115,20 @@ class ExecutorTests: XCTestCase {
     // MARK: Descriptions
 
     func testDescriptions() {
-        XCTAssertFalse(Executor.Default.description.isEmpty)
-        XCTAssertFalse(Executor.Immediate.description.isEmpty)
-        XCTAssertFalse(Executor.MainThread.description.isEmpty)
-        XCTAssertFalse(Executor.Queue(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)).description.isEmpty)
-        XCTAssertFalse(Executor.OperationQueue(NSOperationQueue.currentQueue()!).description.isEmpty)
-        XCTAssertFalse(Executor.Closure({ _ in }).description.isEmpty)
+        XCTAssertFalse(Executor.default.description.isEmpty)
+        XCTAssertFalse(Executor.immediate.description.isEmpty)
+        XCTAssertFalse(Executor.mainThread.description.isEmpty)
+        XCTAssertFalse(Executor.queue(.global(qos: .default)).description.isEmpty)
+        XCTAssertFalse(Executor.operationQueue(OperationQueue.current!).description.isEmpty)
+        XCTAssertFalse(Executor.closure({ _ in }).description.isEmpty)
     }
 
     func testDebugDescriptions() {
-        XCTAssertFalse(Executor.Default.debugDescription.isEmpty)
-        XCTAssertFalse(Executor.Immediate.debugDescription.isEmpty)
-        XCTAssertFalse(Executor.MainThread.debugDescription.isEmpty)
-        XCTAssertFalse(Executor.Queue(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)).debugDescription.isEmpty)
-        XCTAssertFalse(Executor.OperationQueue(NSOperationQueue.currentQueue()!).debugDescription.isEmpty)
-        XCTAssertFalse(Executor.Closure({ _ in }).debugDescription.isEmpty)
+        XCTAssertFalse(Executor.default.debugDescription.isEmpty)
+        XCTAssertFalse(Executor.immediate.debugDescription.isEmpty)
+        XCTAssertFalse(Executor.mainThread.debugDescription.isEmpty)
+        XCTAssertFalse(Executor.queue(.global(qos: .default)).debugDescription.isEmpty)
+        XCTAssertFalse(Executor.operationQueue(OperationQueue.current!).debugDescription.isEmpty)
+        XCTAssertFalse(Executor.closure({ _ in }).debugDescription.isEmpty)
     }
 }

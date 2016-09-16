@@ -1,6 +1,7 @@
 # Bolts in Swift
 
 ![Platforms][platforms-svg]
+![Swift Version][swift-version-svg]
 
 [![Podspec][podspec-svg]][podspec-link]
 [![Carthage compatible][carthage-svg]](carthage-link)
@@ -160,3 +161,4 @@ We want to make contributing to this project as easy and transparent as possible
  [carthage-link]: https://github.com/carthage/carthage
 
  [platforms-svg]: http://img.shields.io/cocoapods/p/Bolts-Swift.svg?style=flat
+ [swift-version-svg]: https://img.shields.io/badge/Swift-3.0.x-orange.svg
