@@ -10,15 +10,6 @@
 import XCTest
 
 extension XCTestCase {
-
-    /**
-     Returns current test name or `test` if it's nil.
-     Since Swift 2.2 and 2.1 have different XCTest API - we need to wrap this here.
-     */
-    var currentTestName: String {
-        return name ?? "test"
-    }
-
     /**
      Waits for all test expectations with a default timeout.
      */

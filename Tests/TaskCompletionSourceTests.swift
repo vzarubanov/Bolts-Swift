@@ -27,7 +27,7 @@ class TaskCompletionSourceTests: XCTestCase {
         let tcs = TaskCompletionSource<String>()
         let task = tcs.task
 
-        tcs.set(result: currentTestName)
+        tcs.set(result: name)
 
         XCTAssertTrue(task.completed)
         XCTAssertNotNil(task.result)
@@ -61,7 +61,7 @@ class TaskCompletionSourceTests: XCTestCase {
         let sut = TaskCompletionSource<String>()
         let task = sut.task
 
-        let success = sut.trySet(result: currentTestName)
+        let success = sut.trySet(result: name)
 
         XCTAssertTrue(success)
         XCTAssertTrue(task.completed)
@@ -96,9 +96,9 @@ class TaskCompletionSourceTests: XCTestCase {
 
     func testTrySetResultReturningFalse() {
         let sut = TaskCompletionSource<String>()
-        sut.set(result: currentTestName)
+        sut.set(result: name)
 
-        let success = sut.trySet(result: currentTestName)
+        let success = sut.trySet(result: name)
 
         XCTAssertFalse(success)
     }
@@ -106,7 +106,7 @@ class TaskCompletionSourceTests: XCTestCase {
     func testTrySetErrorReturningFalse() {
         let error = NSError(domain: "com.bolts", code: 1, userInfo: nil)
         let sut = TaskCompletionSource<String>()
-        sut.set(result: currentTestName)
+        sut.set(result: name)
 
         let success = sut.trySet(error: error)
 
@@ -115,7 +115,7 @@ class TaskCompletionSourceTests: XCTestCase {
 
     func testTryCancelReturningFalse() {
         let sut = TaskCompletionSource<String>()
-        sut.set(result: currentTestName)
+        sut.set(result: name)
         let success = sut.tryCancel()
         XCTAssertFalse(success)
     }

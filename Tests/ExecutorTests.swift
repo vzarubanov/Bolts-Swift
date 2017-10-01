@@ -13,7 +13,7 @@ import BoltsSwift
 class ExecutorTests: XCTestCase {
 
     func testDefaultExecute() {
-        let expectation = self.expectation(description: currentTestName)
+        let expectation = self.expectation(description: name)
 
         var finished = false
         Executor.default.execute {
@@ -26,7 +26,7 @@ class ExecutorTests: XCTestCase {
     }
 
     func testImmediateExecute() {
-        let expectation = self.expectation(description: currentTestName)
+        let expectation = self.expectation(description: name)
 
         var finished = false
         Executor.immediate.execute {
@@ -39,7 +39,7 @@ class ExecutorTests: XCTestCase {
     }
 
     func testMainThreadSyncExecute() {
-        let expectation = self.expectation(description: currentTestName)
+        let expectation = self.expectation(description: name)
 
         var finished = false
         Executor.mainThread.execute {
@@ -52,7 +52,7 @@ class ExecutorTests: XCTestCase {
     }
 
     func testMainThreadAsyncExecute() {
-        let expectation = self.expectation(description: currentTestName)
+        let expectation = self.expectation(description: name)
 
         var finished = false
         DispatchQueue.global(qos: .default).async {
@@ -66,7 +66,7 @@ class ExecutorTests: XCTestCase {
     }
 
     func testQueueExecute() {
-        let expectation = self.expectation(description: currentTestName)
+        let expectation = self.expectation(description: name)
                 let semaphore = DispatchSemaphore(value: 0)
         var finished = false
 
@@ -83,7 +83,7 @@ class ExecutorTests: XCTestCase {
     }
 
     func testClosureExecute() {
-        let expectation = self.expectation(description: currentTestName)
+        let expectation = self.expectation(description: name)
 
         Executor.closure { closure in
             closure()
@@ -95,7 +95,7 @@ class ExecutorTests: XCTestCase {
     }
     
     func testEscapingClosureExecute() {
-        let expectation = self.expectation(description: currentTestName)
+        let expectation = self.expectation(description: name)
         
         Executor.escapingClosure { closure in
             closure()
@@ -107,7 +107,7 @@ class ExecutorTests: XCTestCase {
     }
 
     func testOperationQueueExecute() {
-        let expectation = self.expectation(description: currentTestName)
+        let expectation = self.expectation(description: name)
         let semaphore = DispatchSemaphore(value: 0)
         var finished = false
 
